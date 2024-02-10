@@ -1,4 +1,4 @@
-## Web-App
+## Web-App 💻
 
 Generic web application architecture including:
 - EC2 instances
@@ -7,7 +7,7 @@ Generic web application architecture including:
 - Load balancer
 - Route 53 DNS config
 
-## Architecture
+## Architecture ⚙️
 ![](WebApp/architecture.png)
 
 ## Remote Backends
