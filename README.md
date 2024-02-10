@@ -8,7 +8,7 @@ Generic web application architecture including:
 - Route 53 DNS config
 
 ## Architecture
-![](architecture.png)
+![](WebApp/architecture.png)
 
 ## Remote Backends
 
