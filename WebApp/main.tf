@@ -24,8 +24,8 @@ provider "aws" {
 
 # Initializzing 2 EC2 Instances:
 resource "aws_instance" "FirstEC2" {
-  ami             = "ami-011899242bb902164" # Ubuntu 20.04 LTS // us-east-1
-  instance_type   = "t2.micro"
+  ami             = var.ami # Ubuntu 20.04 LTS // us-east-1
+  instance_type   = var.instance_type
   security_groups = [aws_security_group.instances.name]
   user_data       = <<-EOF
               #!/bin/bash
@@ -35,8 +35,8 @@ resource "aws_instance" "FirstEC2" {
 }
 
 resource "aws_instance" "SecondEC2" {
-  ami             = "ami-011899242bb902164" # Ubuntu 20.04 LTS // us-east-1
-  instance_type   = "t2.micro"
+  ami             = var.ami # Ubuntu 20.04 LTS // us-east-1
+  instance_type   = var.instance_type
   security_groups = [aws_security_group.instances.name]
   user_data       = <<-EOF
               #!/bin/bash
@@ -47,7 +47,7 @@ resource "aws_instance" "SecondEC2" {
 
 #Initializing S3 Bucket:
 resource "aws_s3_bucket" "bucket" {
-  bucket_prefix = "devops-soham-simpleweb-app-data"
+  bucket_prefix = var.bucket_prefix
   force_destroy = true
 }
 # Enabling S3 Versioning
@@ -194,12 +194,12 @@ resource "aws_lb" "load_balancer" {
 
 #Route 53 Configuration
 resource "aws_route53_zone" "primary" {
-  name = "yourdomainname.com"
+  name = var.domain # Your Domain name
 }
 
 resource "aws_route53_record" "root" {
   zone_id = aws_route53_zone.primary.zone_id
-  name    = "yourdomainname.com"
+  name    = var.domain # Your Domain name
   type    = "A"
 
   alias {
@@ -219,10 +219,10 @@ resource "aws_db_instance" "db_instance" {
   #auto_minor_version_upgrade = true
   storage_type               = "standard"
   engine                     = "postgres"
-  engine_version             = "12"
-  instance_class             = "db.t2.micro"
-  name                       = "mydb"
-  username                   = "soham123"
-  password                   = "sohamwebapp"
+  engine_version             = "15.4"
+  instance_class             = "db.t3.micro"
+  name                       = var.database_name
+  username                   = var.db_user
+  password                   = var.db_pass
   skip_final_snapshot        = true
 }
